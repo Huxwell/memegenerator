@@ -41,7 +41,7 @@ def rect_to_rect(img1,img2,rect1,rect2):
     roi2 = img2[rect2[1]:rect2[3], rect2[0]:rect2[2]]
     roi = cv2.resize(roi2,(roi.shape[0],roi.shape[1]))
     img1[rect1[1]:rect1[3], rect1[0]:rect1[2]]=roi
-   return img1
+    return img1
 if __name__ == '__main__':
     import sys, getopt
     print(__doc__)
