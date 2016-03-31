@@ -23,12 +23,11 @@ from common import clock, draw_str
 def detect(img, cascade):
     rects = cascade.detectMultiScale(img, scaleFactor=1.3, minNeighbors=4, minSize=(30, 30),
                                      flags=cv2.CASCADE_SCALE_IMAGE)
-    #print(rects)
+  
     if len(rects) == 0:
         return []
     rects[:,2:] += rects[:,:2]
-    #print(rects)
-    #wait = input("PRESS ENTER TO CONTINUE.")
+
     return rects
 
 def nothing(x):
@@ -42,10 +41,7 @@ def rect_to_rect(img1,img2,rect1,rect2):
     roi2 = img2[rect2[1]:rect2[3], rect2[0]:rect2[2]]
     roi = cv2.resize(roi2,(roi.shape[0],roi.shape[1]))
     img1[rect1[1]:rect1[3], rect1[0]:rect1[2]]=roi
-    #cv2.imshow('roi', roi)
-    #cv2.imshow('roi2', roi2)
-    #cv2.imshow('merged', img1)
-    return img1
+   return img1
 if __name__ == '__main__':
     import sys, getopt
     print(__doc__)
@@ -66,10 +62,6 @@ if __name__ == '__main__':
     meme = cv2.imread("memes/meme0.jpg")
     meme_rects = detect(meme, cascade)
     track = 0
-
-    #draw_rects(meme, meme_rects, (0, 255, 0))
-    #cv2.imshow('meme', meme)
-
 
     cv2.namedWindow('facedetect')
     cv2.createTrackbar("meme",'facedetect',0,7,nothing)
@@ -93,23 +85,16 @@ if __name__ == '__main__':
         if len(rects)==0:
             time.sleep(.01)
             continue
-        #print(rects)
 
         vis = img.copy()
-        #draw_rects(vis, rects, (0, 255, 0))
 
         if not nested.empty():
             for x1, y1, x2, y2 in rects:
                 roi = gray[y1:y2, x1:x2]
                 vis_roi = vis[y1:y2, x1:x2]
                 subrects = detect(roi.copy(), nested)
-                #print(len(subrects))
+           
                 if len(subrects) == 2:
-                    #middle:
-                    #x = int((subrects[0][0] + subrects[1][2]) / 2)
-                    #y = int((subrects[0][1] + subrects[1][3]) / 2)
-                    #print(str(x) + "   " + str(y))
-                    #cv2.rectangle(vis_roi, (x,y), (x+20, y+20), (0, 255, 0), 2)
                     y = int((subrects[0][1] + subrects[1][1]) / 2)
 
                     '''s_img = cv2.imread("memes/small_glasses.png")
@@ -125,7 +110,6 @@ if __name__ == '__main__':
                         vis_roi[y_offset:y_offset+s_img.shape[0], x_offset:x_offset+s_img.shape[1], c] =\
                         s_img[:,:,c] * (s_img[:,:,3]/255.0) +  vis_roi[y_offset:y_offset+s_img.shape[0], x_offset:x_offset+s_img.shape[1], c] * (1.0 - s_img[:,:,3]/255.0)
 
-                #draw_rects(vis_roi, subrects, (255, 0, 0))
 
 
         dt = clock() - t
