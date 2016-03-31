@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
 
     cv2.namedWindow('facedetect')
-    cv2.createTrackbar("meme",'facedetect',0,2,nothing)
+    cv2.createTrackbar("meme",'facedetect',0,7,nothing)
 
     rects = []
     img=[]
